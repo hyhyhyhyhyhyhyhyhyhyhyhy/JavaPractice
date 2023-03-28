@@ -88,13 +88,21 @@ public class assignment {
 				
 				int changenum = intValue1 + intValue2;
 				String fullsen = String.valueOf(charValue) + changenum + intValue3 + strValue;
-				float ten = intValue4;
-				System.out.println(fullsen+ten);
+				float t = intValue4;
+				System.out.println(fullsen+t);
 				
 				/* 추가문제) 아래와 같이 변수 값이 주어질 경우 각 자리의 합을 구해 출력하세요. 
 			    예시) 373 일 경우 3 + 7 + 3 = 13 으로 결과는 13입니다.
 			    힌트) 곱하기 연산자 (*), 나누기 연산자( / ) 와 빼기 연산자 ( - ) 를 이용하세요. */
 				int value = 485;
+				
+				int hun = value/100;
+				int ten = (value - hun*100) / 10; 
+				int one = value - hun*100 - ten*10;
+				int sum = hun + ten + one;
+				System.out.printf("%d 일 경우 %d + %d + %d = %d 으로 결과는 %d입니다.", value, hun, ten, one, sum, sum);
+//				System.out.println(value + " 일 경우 " + hun + " + " + ten + " + " + one + " = " + sum + " 으로 결과는 " + sum + "입니다." );
+				
 	}
 
 }

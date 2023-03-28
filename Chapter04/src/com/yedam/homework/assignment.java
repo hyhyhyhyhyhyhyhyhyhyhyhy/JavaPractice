@@ -74,7 +74,7 @@ public class assignment {
 				System.out.println("주어진 x("+ x + ")와 y(" + y +")의 값은 제3사분면에 있습니다.");
 			}
 		}else {
-			System.out.println("주어진 x("+ x + ")와 y(" + y +")의 값은 x또는 y축 위에 있습니다.");
+			System.out.println("주어진 x("+ x + ")와 y(" + y +")의 값은 x 또는 y축 위에 있습니다.");
 		}
 
 		// 문제5) 연도가 주어졌을 때 해당 년도가 윤년인지를 확인해서 출력하도록 하세요.
@@ -149,7 +149,39 @@ public class assignment {
 				System.out.print(j + "x" + i + "=" + (j*i) + "\t");
 			} System.out.println();
 		}
-
+		
+		//문제 9 - 교재 p.161 7)
+		boolean run = true;
+		int balance = 0;
+		
+		while(run) {
+			System.out.println("-----------------------------------------------------------");
+			System.out.println("1.  예금  |  2.출금  |  3.잔고  |  4.종료");
+			System.out.println("-----------------------------------------------------------");
+			System.out.println("선택> ");
+			
+			int s = sc.nextInt();
+			int deposit = 10000;
+			int withdraw = 2000;
+					
+			switch(s) {
+			case 1:
+				System.out.println("예금액>" + deposit);
+				break;
+			case 2:
+				System.out.println("출금액>" + withdraw);
+				break;
+			case 3:
+				balance = deposit - withdraw;
+				System.out.println("잔고>" + balance);
+				break;
+			case 4:
+				System.out.println("프로그램 종료");
+				run = false;
+				break;
+			default:
+				break;
+			}
+		}
 	}
-
 }

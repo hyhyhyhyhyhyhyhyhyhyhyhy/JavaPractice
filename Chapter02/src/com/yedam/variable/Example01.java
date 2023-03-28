@@ -6,6 +6,7 @@ public class Example01 {
 		int var1 = 0b1011; //2진수(0b)
 		int var2 = 0206; //8진수(0)
 		int var3 = 365; //10진수
+		
 		int var4 = 0xB3; //16진수(0x)
 		
 		System.out.println(var1);
