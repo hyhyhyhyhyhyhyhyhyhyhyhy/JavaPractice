@@ -86,8 +86,10 @@ public class assignment {
 				char charValue = 'A';
 				String strValue = "번지";
 				
-				int changenum = 
-				System.out.println(intValue1);
+				int changenum = intValue1 + intValue2;
+				String fullsen = String.valueOf(charValue) + changenum + intValue3 + strValue;
+				float ten = intValue4;
+				System.out.println(fullsen+ten);
 				
 				/* 추가문제) 아래와 같이 변수 값이 주어질 경우 각 자리의 합을 구해 출력하세요. 
 			    예시) 373 일 경우 3 + 7 + 3 = 13 으로 결과는 13입니다.
