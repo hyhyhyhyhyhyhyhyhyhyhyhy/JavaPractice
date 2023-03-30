@@ -1,4 +1,4 @@
-package com.yedam.clas;
+package com.yedam.oop;
 
 public class Car {
 		//필드 -> 객체의 정보
@@ -34,7 +34,7 @@ public class Car {
 //		public Car(String n, int p) {
 //			name = n;
 //			price = p;
-//		}
+//		} // 웬만하면 따로 지정안하는게 좋음
 		
 		//This를 이용한 필드 초기화
 //		public Car(String name, int price) {

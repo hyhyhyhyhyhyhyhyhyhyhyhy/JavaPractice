@@ -1,4 +1,4 @@
-package com.yedam.clas;
+package com.yedam.oop;
 
 public class Application02 {
 

@@ -26,6 +26,7 @@ public class Bycle {
 				gas -= 1;
 			}else {
 				System.out.println("멈춥니다.(gas잔량 : " + gas + " )"); 
+				return;
 			}
 		}
 	}
