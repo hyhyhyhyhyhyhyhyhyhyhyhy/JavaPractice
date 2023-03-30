@@ -1,7 +1,7 @@
 package com.yedam.oop;
 
 public class Smartphone {
-	//필드 - 객체의 정보를 저장할 수 있는 공간
+	//필드 - 객체의 정보를 저장할 수 있는 공간 (변수)
 	//기본타입, 참조타입
 	String name;
 	String maker;
@@ -14,7 +14,7 @@ public class Smartphone {
 	}
 	
 	
-	//메소드 - 객체가 생성되고 나서 기능부분을 정의
+	//메소드 - 객체가 생성되고 나서 기능부분을 정의 (함수)
 	//void : 반환값이 없다, return이 존재하지 않는다
 	public void getInfo() {
 		System.out.println("나는 getInfo의 메소드다.");
