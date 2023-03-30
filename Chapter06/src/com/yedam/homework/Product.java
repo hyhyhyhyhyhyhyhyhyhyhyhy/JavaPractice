@@ -1,4 +1,4 @@
-package com.yedam.assign;
+package com.yedam.homework;
 
 public class Product {
 	//필드
@@ -9,19 +9,16 @@ public class Product {
 	public Product() {
 	
 	}
-	public Product(String goods, int price) {
+	public Product(String goods) {
 	this.goods = goods;
-	this.price = price;
+	}
+	public Product(int price) {
+		this.price = price;
 	}
 	
 	//메소드
 	void getInfo() {
 		System.out.println("============제품별 가격============");
 		System.out.println(goods + "\t" + price + "원");
-	}
-	
-	
-	
-	
-	
+	}	
 }

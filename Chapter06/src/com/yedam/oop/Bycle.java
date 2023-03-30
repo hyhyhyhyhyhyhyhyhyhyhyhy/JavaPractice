@@ -11,7 +11,7 @@ public class Bycle {
 	}
 	
 	boolean isLeftGas() {
-		if(gas==0) {
+		if(gas==0) { 
 			System.out.println("gas가 없습니다.");
 			return false;
 		}

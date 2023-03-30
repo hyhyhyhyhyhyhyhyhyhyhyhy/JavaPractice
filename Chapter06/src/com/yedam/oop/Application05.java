@@ -63,7 +63,7 @@ public class Application05 {
 				System.out.println("프로그램 종료");
 				break;
 			}else {
-				System.out.println("업는 메뉴입니다. 다시 입력하세요.");
+				System.out.println("없는 메뉴입니다. 다시 입력하세요.");
 			}
 		}
 		
