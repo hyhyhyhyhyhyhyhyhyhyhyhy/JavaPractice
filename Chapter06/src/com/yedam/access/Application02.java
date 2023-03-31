@@ -13,7 +13,7 @@ public class Application02 {
 		//default
 		ac.basic = "default";
 		//private
-//		ac.privacy = "privacy";
+//		ac.privacy = "private";
 		
 		//같은 패키지 안에서만 가져올 수 있어서 shift +컨트롤 + o? 로 가져올 수 있다.
 
