@@ -1,4 +1,4 @@
-package com.yedam.homework;
+package com.yedam.hwq1;
 
 public interface Keypad {
 	//상수 필드
