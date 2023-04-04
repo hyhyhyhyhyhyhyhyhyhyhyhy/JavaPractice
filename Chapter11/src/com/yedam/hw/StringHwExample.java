@@ -18,41 +18,25 @@ public class StringHwExample extends StringGame{
 		 현재 실행코드와 실행결과를 참고하여 StringGame 클래스를 완성하세요.
 		 */
 		
-		//랜덤으로 선택될 단어는 배열로 생성
-		String[] wordOrange = {"o", "r", "a", "n", "g", "e"};
-		String[] wordGame = {"g", "a", "m", "e"};
-		String[] wordPhone = {"p", "h", "o", "n", "e"};
-		String[] wordSmart = {"s", "m", "a", "r", "t"};
-		
-		switch((int)(Math.random()*3)) {
-			case 0 :
-				break;
-			case 1 :
-				break;
-			case 2 : 
-				break;
-			case 3 :
-				break;
-			default :
-				break;
-		}
-		
-		
-		
 		Scanner sc = new Scanner(System.in);
 		
 		boolean run = true;
 		StringGame game = new StringGame();
+		
+		game.getRandomWord();
 		
 		while(run) {
 			System.out.println("---------------------------------------------");
 			System.out.println(" 1.문자하나 | 2.단어 | 3.입력내역 | 4.새 게임 | 5.종료 ");
 			System.out.println("---------------------------------------------");
 			int menu = sc.nextInt();
+			sc.nextLine();
+			System.out.println("현재까지 확인된 문자열의 문자들은 다음과 같습니다.");
 			
 			switch(menu) {
 			case 1:
-				game.setCharData();
+				String searchLetter = sc.nextLine();
+				game.setCharData(searchLetter);
 				break;
 			case 2:
 				game.setStrData();
