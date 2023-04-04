@@ -1,5 +1,7 @@
 package com.yedam.hwq3;
 
+import java.util.Scanner;
+
 import com.yedam.hwq1.*;
 
 public class HomeworkQuestion3 {
