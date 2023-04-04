@@ -21,7 +21,7 @@ public class ClassExample {
 		System.out.println(clazz.getPackageName());
 		System.out.println(clazz.getPackage().getName());
 		
-		//절 대 경 로
+		//절 대 경 로 // 같은 클래스에 이미지 파일 넣는 법 ctrl + c & ctrl + v
 		String photoPath = clazz.getResource("profile_patrick.png").getPath();
 		System.out.println(photoPath);
 		
