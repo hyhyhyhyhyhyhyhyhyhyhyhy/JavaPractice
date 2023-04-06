@@ -66,7 +66,7 @@ public class LottoApp {
 	}
 	
 	private int[] makeNumber() {
-		int[] lotto = new int[6];
+		int[] lotto = new int[6]; // List에서 각각 인덱스에 배열의 내용물을 다 다르게 넣기 위해
 		for (int i = 0; i < 6; i++) {
 			// 랜덤 데이터 뽑기(배열에 데이터 저장)
 			lotto[i] = (int) (Math.random() * 45) + 1;
