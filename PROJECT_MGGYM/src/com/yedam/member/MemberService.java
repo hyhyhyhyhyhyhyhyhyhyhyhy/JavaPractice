@@ -43,7 +43,7 @@ public class MemberService {
 		System.out.print("연락처 > ");
 		int memberMobile = Integer.parseInt(sc.nextLine());
 		
-		MemberDAO.getInstance().memberJoin(member);
+		int result = MemberDAO.getInstance().memberJoin(member);
 		
 	}
 	

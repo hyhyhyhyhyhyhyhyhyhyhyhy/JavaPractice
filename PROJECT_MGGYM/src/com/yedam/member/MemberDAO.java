@@ -16,7 +16,7 @@ public class MemberDAO extends DAO{
 	
 	//회원가입
 	
-	public void memberJoin(Member member) {
+	public int memberJoin(Member member) {
 		int result = 0;
 		try {
 			conn();
@@ -41,6 +41,7 @@ public class MemberDAO extends DAO{
 		}finally {
 			disconn();
 		}
+		return result;
 	}
 	
 	
