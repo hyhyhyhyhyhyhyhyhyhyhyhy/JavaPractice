@@ -19,15 +19,23 @@ public class Member {
 //	EXTENSION              NUMBER(2)    
 //	MEMBER_TYPE   NOT NULL CHAR(2)
 	
-	private String memberId;
-	private String memberPw;
-	private String memberName;
-	private int memberMobile;
+	private String id;
+	private String pw;
+	private String name;
+	private int mobile;
 	private Date signDate;
+	private int regiMonth;
 	private Date startDate;
 	private Date expireDate;
-	private int extension;
-	private String memberType;
+	private String grade;
+	
+	private String ptTrainer;
+	private int ptTotal;
+	private int ptLeft;
+	
+	private String extendApply;
+	private int avaExtendDay;
+	private int extendLeft;
 	
 	
 }
