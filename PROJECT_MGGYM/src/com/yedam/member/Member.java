@@ -9,15 +9,15 @@ import lombok.Data;
 public class Member {
 
 	
-//	MEMBER_ID     NOT NULL VARCHAR2(20) 
-//	MEMBER_PW     NOT NULL VARCHAR2(30) 
-//	MEMBER_NAME            VARCHAR2(12) 
-//	MEMBER_MOBILE          NUMBER(15)   
-//	SIGN_DATE              DATE         
-//	START_DATE             DATE         
-//	EXPIRE_DATE            DATE         
-//	EXTENSION              NUMBER(2)    
-//	MEMBER_TYPE   NOT NULL CHAR(2)
+//	ID          NOT NULL VARCHAR2(20) 
+//	PW          NOT NULL VARCHAR2(30) 
+//	NAME        NOT NULL VARCHAR2(15) 
+//	MOBILE               NUMBER(15)   
+//	SIGN_DATE            DATE         
+//	REGI_MONTH           NUMBER(2)    
+//	START_DATE           DATE         
+//	EXPIRE_DATE          DATE         
+//	GRADE                CHAR(2)  
 	
 	private String id;
 	private String pw;
@@ -31,9 +31,9 @@ public class Member {
 	
 	private String ptTrainer;
 	private int ptTotal;
+	private int ptIng;
 	private int ptLeft;
 	
-	private String extendApply;
 	private int avaExtendDay;
 	private int extendLeft;
 	

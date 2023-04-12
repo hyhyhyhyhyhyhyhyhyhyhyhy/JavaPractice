@@ -34,8 +34,8 @@ public class DAO {
 														// developer에서 인사관리 속성을 들어가면 확인 가능
 														// 네트워크가 같을 경우 방화벽만 잘 해제되어 있다면, 아이피, 포트번호, DB 정보만 알고 있으면, 다른 사람의 데이터를 가져와서 공유해 쓸 수 있음
 														// IP, PORT 개념을 중요하게 알고 있어야 함! >> 1. 연결(접속) 2.보안(특정 아이피 차단 등) 을 할 수 있음
-	String id = "hr";
-	String pw = "hr"; //developer의 테이블에 연결할 user 로그인 정보 입력
+	String id = "mggym";
+	String pw = "mggym"; //developer의 테이블에 연결할 user 로그인 정보 입력
 	
 	//DB 연결
 	public void conn() { //내가 설정한 경로를 못 찾을까봐 예외 처리문을 써야함

@@ -21,12 +21,12 @@ public class LoginExe {
 			loginMenu();
 			if(MemberService.memberState.getGrade().equals("M")) {
 				if(menu == 1) {
-					//회원 조회 (memberservice join ptservice)
+					//회원 조회
 					//세부항목 > 전체회원 조회, 회원명 조회, 등급별 조회
-					
+					subMenu();
 				}else if(menu == 2) {
-					//회원 등록 (memberservice - insert into)
-					
+					//회원 등록
+					ms.memberAdd(null);
 				}else if(menu == 3) {
 					//회원 정보 수정 (memberservice - update)
 					//세부항목 > 재등록 회원 수정, PT 회원 수정, 회원 삭제
@@ -43,8 +43,8 @@ public class LoginExe {
 				}
 			}else {
 				if(menu == 1) {
-					//내 정보 조회 (memberservice join ptservice) // 단건조회 활용할 수 있을까?
-					
+					//내 정보 조회
+					ms.getSearchMember();
 				}else if(menu == 2) {
 					//내 정보 관리 (memberservice)
 					//세부항목 > 비밀번호 수정, 연락처 수정, 연장 신청
@@ -66,9 +66,13 @@ public class LoginExe {
 	//로그인이 완료되었을 때 보이는 전체 메뉴 보임과 동시에 입력값을 받을 수 있도록
 	private void loginMenu() {
 		if(MemberService.memberState.getGrade().equals("M")) {
-			System.out.println("1. 회원정보 조회 | 2. 회원 등록 | 3. 회원 정보 수정 | 4. 연장 관리 | 5. 공지사항 ");
+			System.out.println();
+			System.out.println("관리자로 로그인 중입니다.");
+			System.out.println("1. 회원정보 조회 | 2. 회원 등록 | 3. 회원 정보 수정 | 4. 연장 관리 | 5. 공지사항 | 6. 로그아웃");
 		}else {
-			System.out.println("1. 나의 믓GYM | 2. 내 정보 수정 | 3. 공지사항 게시판 확인");
+			System.out.println();
+			System.out.println("회원으로 로그인 중입니다.");
+			System.out.println("1. 나의 믓GYM | 2. 내 정보 수정 | 3. 공지사항 게시판 확인 | 4. 로그아웃");
 		}
 		System.out.print("선택 메뉴 > ");
 		menu = Integer.parseInt(sc.nextLine());
@@ -77,18 +81,22 @@ public class LoginExe {
 	
 	//관리자 조회 세부메뉴
 	private void subMenu() {
-		int select = Integer.parseInt(sc.nextLine());
 		
-		System.out.println("1. 전체회원 조회 | 2. 회원명 조회 | 3. 등급별 조회 | 4. 이전화면");
+		System.out.println("1. 전체회원 조회 | 2. 회원명 조회 | 3. 등급별 조회 | 4. 이전화면 ");
+		int select = Integer.parseInt(sc.nextLine());
 		
 		switch(select) {
 		case 1:
+			ms.getMemberList();
 			break;
 		case 2:
+			ms.getSearchMember();
 			break;
 		case 3:
+			ms.getSearchGrade();
 			break;
 		case 4:
+			loginMenu();
 			break;
 		default:
 			break;

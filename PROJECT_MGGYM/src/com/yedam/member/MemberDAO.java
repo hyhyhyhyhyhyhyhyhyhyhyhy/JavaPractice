@@ -51,10 +51,10 @@ public class MemberDAO extends DAO{
 	//로그인
 	
 	public Member login (String id) {
-		Member member = null;
+		Member member = new Member();
 		try {
 			conn();
-			String sql = "SELECT * FROM member WHERE member_id = ?";
+			String sql = "SELECT * FROM member WHERE id = ?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
@@ -63,13 +63,13 @@ public class MemberDAO extends DAO{
 			
 			if(rs.next()) {
 				member = new Member();
-				member.setName(rs.getString("member_name"));
-				member.setId(rs.getString("member_id"));
-				member.setPw(rs.getString("member_pw"));
+				member.setName(rs.getString("name"));
+				member.setId(rs.getString("id"));
+				member.setPw(rs.getString("pw"));
 				member.setSignDate(rs.getDate("sign_date"));
 				member.setStartDate(rs.getDate("start_date"));
 				member.setExpireDate(rs.getDate("expire_date"));
-				member.setGrade(rs.getString("member_type"));
+				member.setGrade(rs.getString("grade"));
 			}
 			
 		}catch(Exception e) {
@@ -83,7 +83,7 @@ public class MemberDAO extends DAO{
 	
 	//전체 조회
 	public List<Member> getMemberList(){
-		List<Member> list = new ArrayList();
+		List<Member> list = new ArrayList<Member>();
 		Member member = null;
 		try {
 			conn();
@@ -106,6 +106,8 @@ public class MemberDAO extends DAO{
 				member.setPtTrainer(rs.getString("pt_trainer"));				
 				member.setPtTotal(rs.getInt("pt_total"));
 				member.setPtLeft(rs.getInt("pt_left"));
+				
+				list.add(member);
 			}	
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -145,7 +147,6 @@ public class MemberDAO extends DAO{
 				member.setGrade(rs.getString("grade"));
 				member.setPtTrainer(rs.getString("pt_trainer"));
 				member.setPtLeft(rs.getInt("pt_left"));
-				member.setExtendApply(rs.getString("extend_apply"));
 				member.setExtendLeft(rs.getInt("extend_left"));
 			}
 		}catch(Exception e) {
@@ -191,7 +192,45 @@ public class MemberDAO extends DAO{
 	}
 	
 	
-	
+	//회원추가
+	public int memberAdd(Member member) {
+		int resultM = 0;
+		int resultP = 0;
+		try {
+			conn();
+			String sql = "INSERT INTO member(id, pw, name, mobile, sign_date, regi_month, start_date, grade)"
+					+ "VALUES (?,?,?,?,?,?,?,?)";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member.getId());
+			pstmt.setString(2, member.getPw());
+			pstmt.setString(3, member.getName());
+			pstmt.setInt(4, member.getMobile());
+			pstmt.setDate(5, member.getSignDate());
+			pstmt.setInt(6, member.getRegiMonth());
+			pstmt.setDate(7, member.getStartDate());
+			pstmt.setString(8, member.getGrade());
+			
+			resultM = pstmt.executeUpdate();
+			
+			if(member.getGrade().equals("P")) {
+				String sql2 = "INSERT INTO pt (pt_trainer, pt_total, pt_ing)"
+						+ "VALUES(?,?,?)";
+				
+				pstmt = conn.prepareStatement(sql2);
+				pstmt.setString(1, member.getPtTrainer());
+				pstmt.setInt(2, member.getPtTotal());
+				pstmt.setInt(3, member.getPtIng());
+				
+				resultP = pstmt.executeUpdate();
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+		return resultM + resultP;
+	}
 	
 	
 	

@@ -8,19 +8,21 @@ import lombok.Data;
 
 public class Extension {
 
-//	MEMBER_ID         NOT NULL VARCHAR2(20) 
-//	START_DATE                 DATE         
-//	EXPIRE_DATE                DATE         
-//	AVA_EXTEND_PERIOD          NUMBER(2)    
-//	EXTEND_LEFT                NUMBER(5)    
-//	MEMBER_TYPE       NOT NULL CHAR(2)      
+//	START_DATE              DATE         
+//	EXPIRE_DATE             DATE         
+//	REGI_MONTH              NUMBER(2)    
+//	AVA_EXTEND_DAY          NUMBER(3)    
+//	APPLIED_DAY             NUMBER(3)    
+//	EXTEND_LEFT             NUMBER(5)    
+//	GRADE                   CHAR(2)       
 	
-	private String memberId;
 	private Date startDate;
 	private Date expireDate;
-	private int avaExtendPeriod;
+	private int regiMonth;
+	private int avaExtendDay;
+	private int appliedDay;
 	private int extendLeft;
-	private String memberType;
+	private String grade;
 	
 	
 }

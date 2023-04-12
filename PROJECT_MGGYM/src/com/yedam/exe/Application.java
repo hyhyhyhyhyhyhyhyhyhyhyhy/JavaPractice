@@ -11,6 +11,7 @@ public class Application {
 	
 	MemberService ms = new MemberService();
 	
+	
 	public Application() {
 		run();
 	}
@@ -32,8 +33,8 @@ public class Application {
 				ms.memberJoin();
 			}else if(num == 2) {
 				//로그인 실행 메소드
-				ms.login();
-				
+				ms.login();	
+				new LoginExe();
 			}else if(num == 3) {
 				System.out.println("프로그램 종료");
 				break;
