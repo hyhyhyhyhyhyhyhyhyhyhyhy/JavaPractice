@@ -23,27 +23,28 @@ public class MemberDAO extends DAO{
 		int result = 0;
 		try {
 			conn();
-			String sql = "INSERT INTO member VALUES (?,?,?,?)";
+			String sql = "INSERT INTO member VALUES (?,?,?,?,sysdate,null)";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, member.getName());
 			pstmt.setString(2, member.getId());
 			pstmt.setString(3, member.getPw());
 			pstmt.setInt(4, member.getMobile());
-//			pstmt.setDate(5, member.getSignDate());
 			
 			result = pstmt.executeUpdate();
 			
 			if(result == 1) {
-				System.out.println("회원가입이 완료되었습니다.");
+				System.out.println("!!WELCOME TO 믓GYM!! \n 회원가입이 완료되었습니다. 로그인 후 이용하세요.");
+				System.out.println();
 			}else {
 				System.out.println("가입이 정상적으로 완료되지 않았습니다. 다시 한번 진행해주세요.");
+				System.out.println();
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			disconn();
-		}
+		}		
 		return result;
 	}
 	
@@ -51,7 +52,7 @@ public class MemberDAO extends DAO{
 	//로그인
 	
 	public Member login (String id) {
-		Member member = new Member();
+		Member member = null;
 		try {
 			conn();
 			String sql = "SELECT * FROM member WHERE id = ?";
@@ -67,8 +68,8 @@ public class MemberDAO extends DAO{
 				member.setId(rs.getString("id"));
 				member.setPw(rs.getString("pw"));
 				member.setSignDate(rs.getDate("sign_date"));
-				member.setStartDate(rs.getDate("start_date"));
-				member.setExpireDate(rs.getDate("expire_date"));
+//				member.setStartDate(rs.getDate("start_date"));
+//				member.setExpireDate(rs.getDate("expire_date"));
 				member.setGrade(rs.getString("grade"));
 			}
 			
@@ -81,15 +82,17 @@ public class MemberDAO extends DAO{
 	}
 	
 	
-	//전체 조회
+	//관리자 - 전체 조회
 	public List<Member> getMemberList(){
 		List<Member> list = new ArrayList<Member>();
 		Member member = null;
 		try {
 			conn();
-			String sql = "SELECT m.id, m.name, mobile, start_date, expire_date, \r\n"
-					+ "p.grade, pt_trainer, pt_total, pt_left FROM member m JOIN pt p \r\n"
-					+ "ON(m.id = p.id) \r\n";
+			String sql = "SELECT m.id, m.name, mobile, start_date, expire_date, m.grade, pt_trainer, pt_total, pt_left\r\n"
+					+ "FROM member m LEFT OUTER JOIN pt p\r\n"
+					+ "ON m.id = p.id\r\n"
+					+ "JOIN extension e\r\n"
+					+ "On p.id = e.id;";
 			
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
@@ -118,7 +121,7 @@ public class MemberDAO extends DAO{
 	}
 	
 	
-	//회원명 조회(단건)
+	//관리자 - 회원명 조회(단건)
 	public Member getSearchMember(String name) {
 		Member member = null;
 		try {
@@ -158,7 +161,7 @@ public class MemberDAO extends DAO{
 	}
 	
 	
-	//등급별 조회(단건)
+	//관리자 - 등급별 조회(단건)
 	public Member getSearcGrade(String grade) {
 		Member member = null;
 		try {
@@ -192,7 +195,7 @@ public class MemberDAO extends DAO{
 	}
 	
 	
-	//회원추가
+	//관리자 - 회원추가
 	public int memberAdd(Member member) {
 		int resultM = 0;
 		int resultP = 0;
@@ -233,12 +236,71 @@ public class MemberDAO extends DAO{
 	}
 	
 	
+	//관리자 - 회원 삭제
+	
+	public int memberDelete(String name) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "DELETE FROM member WHERE name = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			
+			result = pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			disconn();
+		}
+		return result;
+	}
 	
 	
+	//사용자 - 비밀번호 수정
+	
+	 public int userPwUpdate(Member member) {
+		 int result = 0;
+		 try {
+			 conn();
+			 String sql = "UPDATE member set pw = ? where id = ?";
+			 
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setString(1, member.getPw());
+			 pstmt.setString(2, member.getId());
+			 
+			 result = pstmt.executeUpdate();
+			 
+		 }catch(Exception e) {
+			 e.printStackTrace();
+		 }finally {
+			 disconn();
+		 }
+		 return result;
+	 }
 	
 	
-	
-	
+	//사용자 - 연락처 수정
+	 
+	 public int userMobileUpdate(Member member) {
+		 int result = 0;
+		 try {
+			 conn();
+			 String sql = "UPDATE member set mobile = ? where id = ?";
+			 
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setInt(1, member.getMobile());
+			 pstmt.setString(2, member.getId());
+			 
+			 result = pstmt.executeUpdate();
+			 
+		 }catch(Exception e) {
+			 e.printStackTrace();
+		 }finally {
+			 disconn();
+		 }
+		 return result;
+	 }
 	
 	
 	

@@ -13,7 +13,7 @@ public class MemberService {
 	public void memberJoin() {
 		Member member = new Member();
 		
-		System.out.println("============ 회원가입 =============");
+		System.out.println("***************** 회원가입 *******************");
 		System.out.print("이름 > ");
 		String name = sc.nextLine();
 		
@@ -21,19 +21,19 @@ public class MemberService {
 		while(true) {
 			System.out.print("아이디 > ");
 			id = sc.nextLine();
-
+			
 			if(id.length()<=20) {
-				break;
+				if(MemberDAO.getInstance().login(id) == null) {
+					System.out.println("아이디 중복 확인 완료.");
+					break;
+				}else {
+					System.out.println("이미 존재하는 아이디입니다.");
+					System.out.println();
+				}
 			}else {
 				System.out.println("영문+숫자 조합 20자리 이하로 작성하세요.");
+				System.out.println();
 			}
-			
-			if(MemberDAO.getInstance().login(id) == null) {
-				System.out.println("아이디 중복 확인 완료.");
-				break;
-			}else {
-				System.out.println("이미 존재하는 아이디입니다.");
-			}	
 		}
 		
 		System.out.print("비밀번호 > ");
@@ -42,21 +42,26 @@ public class MemberService {
 		while(true) {
 			System.out.print("비밀번호 확인 > ");
 			String pw2 = sc.nextLine();
-			if(pw2 == pw) {
+			if(pw2.equals(pw)) {
 				System.out.println("비밀번호 확인 완료.");
 				break;
 			}else {
 				System.out.println("비밀번호가 다릅니다. 다시 확인하세요.");
+				System.out.println();
 			}
 		}
 		
-		System.out.println("연락 가능한 번호로 입력부탁드립니다. 작성 시 '000-0000-0000' 양식으로 작성하세요.");
+		System.out.println();
+		System.out.println("＊연락 가능한 번호로 입력부탁드립니다. \n '-'없이 작성하세요.");
 		System.out.print("연락처 > ");
 		int mobile = Integer.parseInt(sc.nextLine());
 		
-		int result = MemberDAO.getInstance().memberJoin(member);
+		member.setId(id);
+		member.setName(name);
+		member.setPw(pw);
+		member.setMobile(mobile);
 		
-		System.out.println("!!WELCOME TO 믓GYM!! \n 회원가입이 완료되었습니다. 로그인 후 이용하세요.");	
+		int result = MemberDAO.getInstance().memberJoin(member);
 	}
 	
 	
@@ -113,10 +118,10 @@ public class MemberService {
 		System.out.println("아이디 \t 회원명 \t 연락처 \t 시작일 \t 종료일 \t 회원구분 \t 담당트레이너 \t 피티 총 횟수 \t 남은 횟수");
 		for(int i = 0; i<list.size(); i++) {
 			System.out.println(list.get(i).getId() + " \t " + list.get(i).getName() +
-					" \t " + list.get(i).getMobile() + " \t " + list.get(i).getStartDate() +
-					" \t " + list.get(i).getExpireDate() + " \t " + list.get(i).getGrade() +
-					" \t " + list.get(i).getPtTrainer() + " \t " + list.get(i).getPtTotal() + 
-					" \t " + list.get(i).getPtLeft());
+					" \t " + list.get(i).getMobile() + " \t " + list.get(i).getRegiMonth() +
+					" \t " + list.get(i).getStartDate() + list.get(i).getExpireDate() + 
+					" \t " + list.get(i).getGrade() + list.get(i).getPtTrainer() +
+					" \t " + list.get(i).getPtTotal() + list.get(i).getPtLeft());
 		}
 	}
 	
@@ -216,20 +221,87 @@ public class MemberService {
 	}
 		
 	
+	//관리자 - 회원 삭제
 	
 	
+	public void memberDelete() {
+		System.out.print("삭제할 회원명 > ");
+		String name = sc.nextLine();
+		
+		int result = MemberDAO.getInstance().memberDelete(name);
+		
+		if(result > 0) {
+			System.out.println("회원 삭제 완료");
+		}else {
+			System.out.println("회원 삭제 실패");
+		}
+	}
 	
+	
+	//사용자 - 비밀번호 수정
+	
+	public void userPwUpdate() {
+		
+		System.out.print("아이디 > ");
+		String id = sc.nextLine();
+		System.out.print("변경 비밀번호 > ");
+		String pw = sc.nextLine();
+		
+		while(true) {
+			System.out.print("비밀번호 확인 > ");
+			String pw2 = sc.nextLine();
+			if(pw2.equals(pw)) {
+				System.out.println("비밀번호 확인 완료.");
+				break;
+			}else {
+				System.out.println("비밀번호가 다릅니다. 다시 확인하세요.");
+				System.out.println();
+			}
+		}
+		
+		Member member = new Member();
+		member.setId(id);
+		member.setPw(pw);
+		
+		int result = MemberDAO.getInstance().userPwUpdate(member); 
+		
+		if(result > 0) {
+			if(id.equals(memberState.getId())) { 
+				memberState = MemberDAO.getInstance().login(id);  
+			}
+			System.out.println("비밀번호 변경 성공!");
+		}else {
+			System.out.println("비밀번호 변경 실패!");
+		}
+	}
+	
+	//사용자 - 연락처 수정
+	
+	public void userMobileUpdate() {
+		
+		System.out.print("아이디 > ");
+		String id = sc.nextLine();
+		System.out.print("변경 연락처 > ");
+		int mobile = Integer.parseInt(sc.nextLine());
+		
+		Member member = new Member();
+		member.setId(id);
+		member.setMobile(mobile);
+		
+		int result = MemberDAO.getInstance().userMobileUpdate(member); 
+		
+		if(result > 0) {
+			if(id.equals(memberState.getId())) { 
+				memberState = MemberDAO.getInstance().login(id);  
+			}
+			System.out.println("연락처 변경 성공");
+		}else {
+			System.out.println("연락처 변경 실패");
+		}
+	}
 	
 	
 
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
