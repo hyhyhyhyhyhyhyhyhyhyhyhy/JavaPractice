@@ -26,15 +26,20 @@ public class LoginApp {
 	private void loginMenu() {
 		if(MemberService.memberState.getGrade() == null) {
 			System.out.println("등록이 되지 않은 사용자입니다. 등록 후 이용부탁드립니다.");
+			System.out.println();
 			return;
 		}else if(MemberService.memberState.getGrade().equals("M")) {
 			System.out.println();
-			System.out.println("[관리자 모드]");
-			System.out.println("1. 회원정보 조회 | 2. 회원 등록 | 3. 회원 정보 수정 | 4. 연장 관리 | 5. 공지사항 | 6. 로그아웃");
+			System.out.println("【 관리자 모드 】");
+			System.out.println("───────────────────────────────────────────────────────────────────────────");
+			System.out.println(" １. 회원정보 조회 | ２. 회원 등록 | ３. 회원 정보 수정 | ４. 연장 조회 | ５. 로그아웃 ");
+			System.out.println("───────────────────────────────────────────────────────────────────────────");
 		}else {
 			System.out.println();
-			System.out.println("[사용자 모드]");
-			System.out.println("1. 나의 믓GYM | 2. 내 정보 수정 | 3. 공지사항 게시판 확인 | 4. 로그아웃");
+			System.out.println("【 사용자 모드 】");
+			System.out.println("────────────────────────────────────────────────");
+			System.out.println(" １. 나의 믓GYM | ２. 나의 믓GYM 관리 | ３. 로그아웃 ");
+			System.out.println("────────────────────────────────────────────────");
 		}
 		System.out.print("선택 > ");
 		menu = Integer.parseInt(sc.nextLine());
@@ -63,8 +68,6 @@ public class LoginApp {
 					//연장 관리 (extensionService)
 					as.applyExtension();
 				}else if(menu == 5) {
-					//공지사항 게시판 보기, 수정, 삭제 항목 만들어야 함
-				}else if(menu == 6) {
 					//로그아웃
 					ms.logout();
 					break;
@@ -78,8 +81,6 @@ public class LoginApp {
 					//세부항목 > 비밀번호 수정, 연락처 수정, 연장 신청
 					userSubMenu();
 				}else if(menu == 3) {
-					//공지사항 게시판 확인
-				}else if(menu == 4) {
 					//로그아웃
 					ms.logout();
 					break;
@@ -93,7 +94,7 @@ public class LoginApp {
 	//관리자 메뉴 1
 	private void staffSubMenu1() {
 		
-		System.out.println("1. 전체회원 조회 | 2. 회원명 조회 | 3. 등급별 조회 | 4. 이전화면 ");
+		System.out.println("１. 전체회원 조회 | ２. 회원명 조회 | ３. 등급별 조회 | ４. 이전화면 ");
 		System.out.print("선택 > ");
 		int select = Integer.parseInt(sc.nextLine());
 		
@@ -120,7 +121,7 @@ public class LoginApp {
 	//관리자 메뉴 3
 	private void staffSubMenu3() {
 		
-		System.out.println("1. 재등록 회원 수정 | 2. pt 회원 수정 | 3. 회원 삭제 | 4. 이전화면 ");
+		System.out.println("１. 재등록 회원 수정 | ２. pt 회원 수정 | ３. 회원 삭제 | ４. 이전화면 ");
 		System.out.print("선택 > ");
 		int select = Integer.parseInt(sc.nextLine());
 		
@@ -147,7 +148,10 @@ public class LoginApp {
 	
 	private void userSubMenu() {
 		
-		System.out.println("1. 비밀번호 수정 | 2. 연락처 수정 | 3. 연장 신청");
+		System.out.println("\n〔 회원 정보 및 연장 신청 〕");
+		System.out.println("─────────────────────────────────────────────");
+		System.out.println(" １. 비밀번호 수정 | ２. 연락처 수정 | ３. 연장 신청");
+		System.out.println("─────────────────────────────────────────────");
 		System.out.print("선택 > ");
 		int select = Integer.parseInt(sc.nextLine());
 		

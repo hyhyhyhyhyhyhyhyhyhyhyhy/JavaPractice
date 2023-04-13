@@ -200,43 +200,53 @@ public class MemberDAO extends DAO{
 	
 	
 	//관리자 - 회원 추가
-	public int memberAdd(Member member) {
-		int resultM = 0;
-		int resultP = 0;
+	public Member memberAdd() {
+
+		Member member = new Member();
+		
 		try {
 			conn();
-			String sql = "INSERT INTO member(id, pw, name, mobile, sign_date, regi_month, start_date, grade)"
-					+ "VALUES (?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO ( SELECT name, id, pw, mobile, sign_date, grade FROM member)"
+					+ "VALUES (?, ?, ?, ?, TO_DATE(?), ?)";
+					
+//					"INSERT INTO member(id, pw, name, mobile, sign_date, regi_month, start_date, grade)"
+//					+ "VALUES (?,?,?,?,?,?,?,?)";
+			
+			String sql2 = "INSERT INTO (SELECT regi_month, start_date)"
+					+ "VALUES (TO_DATE(?), ?, )";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, member.getId());
-			pstmt.setString(2, member.getPw());
-			pstmt.setString(3, member.getName());
+			pstmt.setString(1, member.getName());
+			pstmt.setString(2, member.getId());
+			pstmt.setString(3, member.getPw());
 			pstmt.setInt(4, member.getMobile());
 			pstmt.setDate(5, member.getSignDate());
-			pstmt.setInt(6, member.getRegiMonth());
+			pstmt.setString(6, member.getGrade());
+
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setInt(8, member.getRegiMonth());
 			pstmt.setDate(7, member.getStartDate());
-			pstmt.setString(8, member.getGrade());
-			
-			resultM = pstmt.executeUpdate();
+
+			pstmt.executeUpdate();
+			pstmt.executeUpdate();
 			
 			if(member.getGrade().equals("P")) {
-				String sql2 = "INSERT INTO pt (pt_trainer, pt_total, pt_ing)"
+				String sql3 = "INSERT INTO pt (pt_trainer, pt_total, pt_ing)"
 						+ "VALUES(?,?,?)";
 				
-				pstmt = conn.prepareStatement(sql2);
+				pstmt = conn.prepareStatement(sql3);
 				pstmt.setString(1, member.getPtTrainer());
 				pstmt.setInt(2, member.getPtTotal());
 				pstmt.setInt(3, member.getPtIng());
 				
-				resultP = pstmt.executeUpdate();
+				pstmt.executeUpdate();
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			disconn();
 		}
-		return resultM + resultP;
+		return member;
 	}
 	
 	

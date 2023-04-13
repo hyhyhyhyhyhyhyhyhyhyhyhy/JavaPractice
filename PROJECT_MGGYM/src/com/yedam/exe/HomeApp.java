@@ -22,8 +22,9 @@ public class HomeApp {
 			System.out.println("┌──────────────────────────────────────────┐");
 			System.out.println("│ ※ 믓GYM은 100% 회원제로 이용가능한 헬스장입니다. │\n│   회원가입 후 로그인 이용 부탁드립니다.          │\n│   오늘도 쇠질 화이팅♡                        │");
 			System.out.println("└──────────────────────────────────────────┘");
-			System.out.println("**************** 믓GYM HOME *****************");
 			System.out.println();
+			System.out.println("★☆★☆★☆★☆★☆★☆ 믓GYM HOME ☆★☆★☆★☆★☆★☆★☆");
+			System.out.println("────────────────────────────────────────────");
 			System.out.println("   １. 회원가입   |   ２. 로그인   |   ３. 종료   ");
 			System.out.println("────────────────────────────────────────────");
 			System.out.print("선택 > ");
