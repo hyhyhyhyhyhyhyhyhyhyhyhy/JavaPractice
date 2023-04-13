@@ -9,15 +9,12 @@ import lombok.Data;
 public class Member {
 
 	
-//	ID             NOT NULL VARCHAR2(20) 
-//	NAME           NOT NULL VARCHAR2(15) 
-//	REGI_MONTH              NUMBER(2)    
-//	START_DATE              DATE         
-//	EXPIRE_DATE             DATE         
-//	AVA_EXTEND_DAY          NUMBER(3)    
-//	APPLIED_DAY             NUMBER(3)    
-//	EXTEND_LEFT             NUMBER(5)    
-//	GRADE                   CHAR(1)     
+//	NAME      NOT NULL VARCHAR2(15) 
+//	ID        NOT NULL VARCHAR2(20) 
+//	PW        NOT NULL VARCHAR2(30) 
+//	MOBILE             NUMBER(15)   
+//	SIGN_DATE          DATE         
+//	GRADE              CHAR(1)      
 	
 	private String id;
 	private String pw;

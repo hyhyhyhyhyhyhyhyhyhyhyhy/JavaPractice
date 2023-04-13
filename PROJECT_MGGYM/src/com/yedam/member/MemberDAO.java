@@ -34,6 +34,7 @@ public class MemberDAO extends DAO{
 			result = pstmt.executeUpdate();
 			
 			if(result == 1) {
+				System.out.println();
 				System.out.println("!!WELCOME TO 믓GYM!! \n 회원가입이 완료되었습니다. 로그인 후 이용하세요.");
 				System.out.println();
 			}else {
@@ -68,8 +69,6 @@ public class MemberDAO extends DAO{
 				member.setId(rs.getString("id"));
 				member.setPw(rs.getString("pw"));
 				member.setSignDate(rs.getDate("sign_date"));
-//				member.setStartDate(rs.getDate("start_date"));
-//				member.setExpireDate(rs.getDate("expire_date"));
 				member.setGrade(rs.getString("grade"));
 			}
 			
@@ -82,6 +81,11 @@ public class MemberDAO extends DAO{
 	}
 	
 	
+	
+	//---------------------------------------------------------------------
+	
+	
+	
 	//관리자 - 전체 조회
 	public List<Member> getMemberList(){
 		List<Member> list = new ArrayList<Member>();
@@ -92,7 +96,7 @@ public class MemberDAO extends DAO{
 					+ "FROM member m LEFT OUTER JOIN pt p\r\n"
 					+ "ON m.id = p.id\r\n"
 					+ "JOIN extension e\r\n"
-					+ "On p.id = e.id;";
+					+ "On p.id = e.id";
 			
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
@@ -121,18 +125,17 @@ public class MemberDAO extends DAO{
 	}
 	
 	
-	//관리자 - 회원명 조회(단건)
+	//관리자 - 회원명 조회(단건) + 사용자 - 내 정보 조회
 	public Member getSearchMember(String name) {
 		Member member = null;
 		try {
 			conn();
-			String sql = "SELECT m.name, mobile, m.id, pw, start_date, expire_date, \r\n"
-					+ "p.grade, pt_trainer, pt_left, extend_apply, extend_left"
+			String sql = "SELECT m.name, m.mobile, m.id, pw, t.start_date, t.expire_date, p.grade, pt_trainer, pt_left, ava_extend_day, extend_left\r\n"
 					+ "FROM member m JOIN pt p \r\n"
-					+ "ON(m.id = p.id) \r\n"
-					+ "JOIN extention t \r\n"
-					+ "ON(p.id = t.id)"
-					+ "WHERE m.id = ? \r\n";
+					+ "ON(m.id = p.id)\r\n"
+					+ "JOIN extension t \r\n"
+					+ "ON(p.id = t.id)\r\n"
+					+ "WHERE m.name = ?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
@@ -150,6 +153,7 @@ public class MemberDAO extends DAO{
 				member.setGrade(rs.getString("grade"));
 				member.setPtTrainer(rs.getString("pt_trainer"));
 				member.setPtLeft(rs.getInt("pt_left"));
+				member.setAvaExtendDay(rs.getInt("ava_extend_day"));
 				member.setExtendLeft(rs.getInt("extend_left"));
 			}
 		}catch(Exception e) {
@@ -195,7 +199,7 @@ public class MemberDAO extends DAO{
 	}
 	
 	
-	//관리자 - 회원추가
+	//관리자 - 회원 추가
 	public int memberAdd(Member member) {
 		int resultM = 0;
 		int resultP = 0;

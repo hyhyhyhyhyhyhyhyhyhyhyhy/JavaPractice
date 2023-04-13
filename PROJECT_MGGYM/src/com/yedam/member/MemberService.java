@@ -74,7 +74,7 @@ public class MemberService {
 	public void login() {
 		Member member = new Member();
 		
-		System.out.println("============ 로그인 =============");
+		System.out.println("================== 로그인 ===================");
 		
 		System.out.print("아이디 > ");
 		String id = sc.nextLine();
@@ -102,6 +102,7 @@ public class MemberService {
 		if(memberState != null) {
 			memberState = null;
 			System.out.println("정상적으로 로그아웃되었습니다.");
+			System.out.println();
 		}
 	}
 	
@@ -109,12 +110,13 @@ public class MemberService {
 	//---------------------------------------------------------------------
 	
 	
-	//전체 조회
+	
+	//관리자 - 전체 조회
 	public void getMemberList() {
 		List<Member> list = MemberDAO.getInstance().getMemberList();
 		if(list.size() == 0) {
 			System.out.println("조회된 내용이 없습니다.");
-		}
+		}  //수동으로 탭 맞춰보기!!
 		System.out.println("아이디 \t 회원명 \t 연락처 \t 시작일 \t 종료일 \t 회원구분 \t 담당트레이너 \t 피티 총 횟수 \t 남은 횟수");
 		for(int i = 0; i<list.size(); i++) {
 			System.out.println(list.get(i).getId() + " \t " + list.get(i).getName() +
@@ -126,7 +128,7 @@ public class MemberService {
 	}
 	
 	
-	//회원명 조회 + 내 정보 조회
+	//관리자 - 회원명 조회 + 사용자 - 내 정보 조회
 	public void getSearchMember() {	
 		String username = "";
 		if(memberState.getGrade().equals("M")) {
@@ -140,21 +142,20 @@ public class MemberService {
 		if(member == null) {
 			System.out.println("회원이 존재하지 않습니다.");
 		}else {
-			System.out.println("회원명 : " + member.getName() + "\t" + "연락처 : " + member.getMobile());
-			System.out.println("아이디 : " + member.getId() + "\t" + "비밀번호 : " + member.getPw());
+			System.out.println("회원명 : " + member.getName() + "\t\t" + "연락처 : " + member.getMobile());
+			System.out.println("아이디 : " + member.getId() + "\t\t" + "비밀번호 : " + member.getPw());
 			System.out.println("시작일 : " + member.getStartDate() + "\t" + "종료일 : " + member.getExpireDate());
-			System.out.println("등록구분 " + member.getGrade());
+			System.out.print("등록구분 : " + member.getGrade() + "\t\t");
 			if(member.getGrade().equals("P")) {
 				System.out.print("담당 트레이너 : " + member.getPtTrainer() + "\t" );
 				System.out.println("현재 기준 잔여 pt 횟수 : " + member.getPtLeft());
 			}
-			System.out.print("연장신청 여부 : " + member.getAvaExtendDay() + "\t" );
 			System.out.println("남은 연장기간 : " + member.getExtendLeft() + "일");
 		}
 	}
 	
 	
-	//등급별 조회(단건)
+	//관리자 - 등급별 조회(단건)
 	public void getSearchGrade() {
 		Member member = new Member();
 		
@@ -183,8 +184,8 @@ public class MemberService {
 	}
 	
 	
-	//회원추가
-	public void memberAdd(Member member) {
+	//관리자 - 회원 추가
+	public void memberAdd() {
 		System.out.println("=============================");
 		System.out.println("          회 원 등 록");
 		System.out.println("=============================");
@@ -216,8 +217,6 @@ public class MemberService {
 		mem.setStartDate(Date.valueOf(start));
 		mem.setGrade(grade);
 		
-		MemberDAO.getInstance().memberAdd(member);
-		
 	}
 		
 	
@@ -233,7 +232,7 @@ public class MemberService {
 		if(result > 0) {
 			System.out.println("회원 삭제 완료");
 		}else {
-			System.out.println("회원 삭제 실패");
+			System.out.println("존재하지 않는 회원입니다.");
 		}
 	}
 	
