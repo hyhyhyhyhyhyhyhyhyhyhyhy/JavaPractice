@@ -1,6 +1,8 @@
 package com.yedam.pt;
 
 import com.yedam.common.DAO;
+import com.yedam.member.MemberDAO;
+import com.yedam.member.MemberService;
 
 public class PtDAO extends DAO{
 
@@ -18,16 +20,12 @@ public class PtDAO extends DAO{
 	//관리자 - PT 회원 수정
 	
 	public int ptMemberUpdate(Pt ptUpdate) {
-		 int resultEx = 0;
-		 int resultMem = 0;
+		 int result = 0;
 		 try {
 			 conn();
 			 String sql = "UPDATE pt\r\n"
-			 		+ "SET grade = '?', pt_trainer = '?', pt_total = ?, pt_ing = ?, pt_left = pt_total - pt_ing\r\n"
-			 		+ "WHERE id = (\r\n"
-			 		+ "                        SELECT id\r\n"
-			 		+ "                        FROM member\r\n"
-			 		+ "                        WHERE name = '?')";
+			 		+ "SET grade = ?, pt_trainer = ?, pt_total = ?, pt_ing = ?, pt_left = pt_total - pt_ing\r\n"
+			 		+ "WHERE id = (SELECT id FROM member WHERE name = ?)";
 			 
 			 pstmt = conn.prepareStatement(sql);
 			 pstmt.setString(1, ptUpdate.getGrade());
@@ -36,25 +34,24 @@ public class PtDAO extends DAO{
 			 pstmt.setInt(4, ptUpdate.getPtIng());
 			 pstmt.setString(5, ptUpdate.getName());
 			 
-			 rs = pstmt.executeQuery();
-			 resultEx = pstmt.executeUpdate();
+			 result = pstmt.executeUpdate();
 			 
 			 String sql2 = "UPDATE member\r\n"
-			 		+ "SET grade = '?'\r\n"
-			 		+ "WHERE name = '?'";
+			 		+ "SET grade = ?\r\n"
+			 		+ "WHERE name = ?";
 			 
 			 pstmt = conn.prepareStatement(sql2);
 			 pstmt.setString(1, ptUpdate.getGrade());
-			 pstmt.setString(5, ptUpdate.getName());
+			 pstmt.setString(2, ptUpdate.getName());
 			 
-			 resultMem = pstmt.executeUpdate();
+			 result = pstmt.executeUpdate();
 			 
 		 }catch(Exception e) {
 			 e.printStackTrace();
 		 }finally {
 			 disconn();
 		 }
-		 return resultEx + resultMem;
+		 return result;
 	 }
 	
 	

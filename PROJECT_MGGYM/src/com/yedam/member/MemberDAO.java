@@ -35,10 +35,10 @@ public class MemberDAO extends DAO{
 			
 			if(result == 1) {
 				System.out.println();
-				System.out.println("!!WELCOME TO 믓GYM!! \n 회원가입이 완료되었습니다. 로그인 후 이용하세요.");
+				System.out.println(" !! WELCOME TO 믓GYM !! \n 회원가입이 완료되었습니다. 로그인 후 이용하세요.");
 				System.out.println();
 			}else {
-				System.out.println("가입이 정상적으로 완료되지 않았습니다. 다시 한번 진행해주세요.");
+				System.out.println(" 가입이 정상적으로 완료되지 않았습니다. 다시 한번 진행해주세요.");
 				System.out.println();
 			}
 		}catch (Exception e) {
@@ -165,13 +165,13 @@ public class MemberDAO extends DAO{
 	}
 	
 	
-	//관리자 - 등급별 조회(단건)
-	public Member getSearcGrade(String grade) {
+	//관리자 - 등급별 조회
+	public List<Member> getSearcGrade(String grade) {
 		Member member = null;
+		List<Member> list = new ArrayList<>();
 		try {
 			conn();
-			String sql = "SELECT m.name, mobile, start_date, expire_date, \r\n"
-					+ "pt_trainer, pt_left"
+			String sql = "SELECT m.name, mobile, pt_trainer, pt_left "
 					+ "FROM member m JOIN pt p \r\n"
 					+ "ON(m.id = p.id) \r\n"
 					+ "WHERE m.grade = ? \r\n";
@@ -181,39 +181,34 @@ public class MemberDAO extends DAO{
 			
 			rs = pstmt.executeQuery();
 			
-			if(rs.next()) {
+			while(rs.next()) {
 				member = new Member();
 				member.setName(rs.getString("name"));
 				member.setMobile(rs.getInt("mobile"));
-				member.setStartDate(rs.getDate("start_Date"));
-				member.setExpireDate(rs.getDate("expire_date"));
 				member.setPtTrainer(rs.getString("pt_trainer"));
 				member.setPtLeft(rs.getInt("pt_left"));
+				
+				list.add(member);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
 			disconn();
 		}
-		return member;
+		return list;
 	}
 	
 	
 	//관리자 - 회원 추가
-	public Member memberAdd() {
-
-		Member member = new Member();
-		
+	public int memberAdd(Member member, int avaExtend) {
+		int result = 0;
 		try {
 			conn();
-			String sql = "INSERT INTO ( SELECT name, id, pw, mobile, sign_date, grade FROM member)"
+			String sql = "INSERT INTO member (name, id, pw, mobile, sign_date, grade )"
 					+ "VALUES (?, ?, ?, ?, TO_DATE(?), ?)";
-					
-//					"INSERT INTO member(id, pw, name, mobile, sign_date, regi_month, start_date, grade)"
-//					+ "VALUES (?,?,?,?,?,?,?,?)";
-			
-			String sql2 = "INSERT INTO (SELECT regi_month, start_date)"
-					+ "VALUES (TO_DATE(?), ?, )";
+
+			String sql2 = "INSERT INTO extension (id, name, regi_month, start_date, expire_date, ava_extend_day, applied_day, extend_left, grade)"
+					+ "VALUES (?, ?, ?, TO_DATE(?), ADD_MONTHS(TO_DATE(?, ?)), ?, 0, ?, ?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getName());
@@ -223,30 +218,40 @@ public class MemberDAO extends DAO{
 			pstmt.setDate(5, member.getSignDate());
 			pstmt.setString(6, member.getGrade());
 
+			result = pstmt.executeUpdate();
+			
 			pstmt = conn.prepareStatement(sql2);
-			pstmt.setInt(8, member.getRegiMonth());
-			pstmt.setDate(7, member.getStartDate());
+			pstmt.setString(1, member.getId());
+			pstmt.setString(2, member.getName());
+			pstmt.setInt(3, member.getRegiMonth());
+			pstmt.setDate(4, member.getStartDate());
+			pstmt.setDate(5, member.getStartDate());
+			pstmt.setInt(6, member.getRegiMonth());
+			pstmt.setInt(7, avaExtend);
+			pstmt.setInt(8, avaExtend);
+			pstmt.setString(9, member.getGrade());
 
-			pstmt.executeUpdate();
-			pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 			
 			if(member.getGrade().equals("P")) {
-				String sql3 = "INSERT INTO pt (pt_trainer, pt_total, pt_ing)"
-						+ "VALUES(?,?,?)";
+				String sql3 = "INSERT INTO pt (grade, id, pt_trainer, pt_total, pt_ing, pt_left)"
+						+ "VALUES(?,?,?,?,0,?)";
 				
 				pstmt = conn.prepareStatement(sql3);
-				pstmt.setString(1, member.getPtTrainer());
-				pstmt.setInt(2, member.getPtTotal());
-				pstmt.setInt(3, member.getPtIng());
+				pstmt.setString(1, member.getGrade());
+				pstmt.setString(2, member.getId());
+				pstmt.setString(3, member.getPtTrainer());
+				pstmt.setInt(4, member.getPtTotal());
+				pstmt.setInt(5, member.getPtTotal());
 				
-				pstmt.executeUpdate();
+				result = pstmt.executeUpdate();
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			disconn();
 		}
-		return member;
+		return result;
 	}
 	
 	

@@ -20,20 +20,24 @@ public class ExtensionDAO extends DAO{
 	
 	//관리자 - 재등록 회원 수정
 	
-	public int memberReregi(Extension regi) {
+	public int memberReregi(Extension regi, int avaExtend) {
 		 int result = 0;
 		 try {
 			 conn();
 			 String sql = "UPDATE extension\r\n"
 			 		+ "set start_date = TO_DATE(?) , expire_date = ADD_months(TO_DATE(?), ?), "
-			 		+ "regi_month = ?  where name = ?";
+			 		+ "ava_extend_day = ?, applied_day = 0, extend_left = ?, "
+			 		+ "regi_month = ?, grade =?  where name = ?";
 			 
 			 pstmt = conn.prepareStatement(sql);
 			 pstmt.setDate(1, regi.getStartDate());
 			 pstmt.setDate(2, regi.getStartDate());
 			 pstmt.setInt(3, regi.getRegiMonth());
-			 pstmt.setInt(4, regi.getRegiMonth());
-			 pstmt.setString(5, regi.getName());
+			 pstmt.setInt(4, avaExtend);
+			 pstmt.setInt(5, avaExtend);
+			 pstmt.setInt(6, regi.getRegiMonth());
+			 pstmt.setString(7, regi.getGrade());
+			 pstmt.setString(8, regi.getName());
 			 
 			 result = pstmt.executeUpdate();
 			 
@@ -72,7 +76,7 @@ public class ExtensionDAO extends DAO{
 	}
 	
 	
-	// 연장 관련 전체 조회
+	// 연장 신청 가능 일수 조회
 	public Extension getExtendList(){
 
 		Extension extend = null;

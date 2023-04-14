@@ -1,5 +1,7 @@
 package com.yedam.pt;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
@@ -21,5 +23,10 @@ public class Pt {
 	private int ptLeft;
 	
 	private String name;
-	
+	private int regiMonth;
+	private Date startDate;
+	private Date expireDate;
+	private int avaExtendDay;
+	private int appliedDay;
+	private int extendLeft;
 }
